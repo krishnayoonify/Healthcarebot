@@ -16,6 +16,7 @@ import Avatar from "@mui/material/Avatar";
 import UserIcon from "./219970.png";
 import BotIcon from "./bot.jpg";
 import SyncLoader from "react-spinners/SyncLoader";
+import ReactMarkdown from 'react-markdown';
 class Chatbot extends React.Component {
   constructor(props) {
     super(props);
@@ -169,9 +170,10 @@ class Chatbot extends React.Component {
                               minWidth: "70px",
                               marginRight: "6px",
                               boxShadow: "0 2px 14px 0 rgb(32 40 45 / 8%)",
+                              textAlign:"left"
                             }}
                           >
-                            {message.text}
+                            <ReactMarkdown>{message.text}</ReactMarkdown>
                           </div>
                           <div style={{ marginRight: "8px" }}>
                             <Avatar alt="User" src={UserIcon} />
@@ -197,9 +199,10 @@ class Chatbot extends React.Component {
                               minWidth: "70px",
                               marginLeft: "6px",
                               boxShadow: "0 2px 14px 0 rgb(32 40 45 / 8%)",
+                              textAlign:"left"
                             }}
                           >
-                            {message.partialBotMessage}
+                            <ReactMarkdown>{message.partialBotMessage}</ReactMarkdown>
                           </div>
                         </div>
                       )}
