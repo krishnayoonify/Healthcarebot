@@ -7,7 +7,7 @@ from PIL import ImageGrab, Image
 
 def open_eaglesoft():
     print("Opening EagleSoft")
-    return True
+    # return True
     application_name = "Patterson Eaglesoft"
 
     # Press the Windows key to open the Start menu
@@ -39,11 +39,16 @@ def open_eaglesoft():
     logon_box = (899, 544)
     pyautogui.moveTo(logon_box)
     pyautogui.click(logon_box)
-    time.sleep(10)
+    time.sleep(20)
+
+    chart_option_screen_box = (1384, 665)
+    pyautogui.moveTo(chart_option_screen_box)
+    pyautogui.click(chart_option_screen_box)
+    time.sleep(5)
 
 
 def process_request(user_name="Testa,Pa"):
-    return {"code": "E1232C", "fee": "24", "image": "image.png", "xray": "xray.png"}
+    # return {"code": "E1232C", "fee": "24", "image": "image.png", "xray": "xray.png"}
     chart_box = (239, 67)
     pyautogui.moveTo(chart_box)
     pyautogui.click(chart_box)
@@ -87,7 +92,7 @@ def process_request(user_name="Testa,Pa"):
         except Exception as e:
             return False
 
-    def get_popup_data(code):
+    def get_popup_data(code, fee):
         edit_box = (922, 872)
         pyautogui.moveTo(edit_box)
         pyautogui.click(edit_box)
@@ -100,18 +105,6 @@ def process_request(user_name="Testa,Pa"):
         checked_image_path = os.path.join(current_directory, "radio_checked.png")
         region = (871, 330, 18, 17)
         is_selected = is_radio_button_selected(checked_image_path, region=region)
-        """
-        pyperclip.copy('')
-        fee_box = (1094, 385)
-        pyautogui.moveTo(fee_box)
-        pyautogui.click(fee_box)
-        pyautogui.doubleClick(fee_box)
-        pyautogui.hotkey('ctrl', 'a')
-        pyautogui.hotkey('ctrl', 'c')
-        fee = pyperclip.paste()
-        if fee:
-
-        """
         if is_selected:
             pyperclip.copy("")
             code_box = (718, 363)
@@ -123,12 +116,26 @@ def process_request(user_name="Testa,Pa"):
             pyautogui.hotkey("ctrl", "c")
             code = pyperclip.paste()
             print("C O D E ", code)
+
+            time.sleep(0.5)
+            pyperclip.copy("")
+            fee_box = (1094, 385)
+            pyautogui.moveTo(fee_box)
+            pyautogui.click(fee_box)
+            time.sleep(1)
+            pyautogui.doubleClick(fee_box)
+            pyautogui.hotkey("ctrl", "a")
+            pyautogui.hotkey("ctrl", "c")
+            fee = pyperclip.paste()
+            print("F E E ", code)
+
         cancel_popup = (1193, 359)
         pyautogui.click(cancel_popup)
         time.sleep(0.5)
-        return code
+        return code, fee
 
     code = None
+    fee = None
     table_box_cnt = 0
     for i in range(4):
         if not code:
@@ -137,7 +144,7 @@ def process_request(user_name="Testa,Pa"):
             pyautogui.moveTo(table_box)
             pyautogui.click(table_box)
             time.sleep(0.5)
-            code = get_popup_data(code)
+            code, fee = get_popup_data(code, fee)
 
     for i in range(6):
         if not code:
@@ -145,8 +152,8 @@ def process_request(user_name="Testa,Pa"):
             pyautogui.moveTo(fee_box)
             pyautogui.click(fee_box)
             time.sleep(0.5)
-            code = get_popup_data(code)
-    ## get cone done ##
+            code, fee = get_popup_data(code, fee)
+    ## get code done ##
 
     def save_clipboard_image(output_path):
         """
@@ -195,10 +202,10 @@ def process_request(user_name="Testa,Pa"):
         # Send the image file to the API
         print("send_image_to_api")
 
-    # Clean up: Remove the saved image file if desired
-    if os.path.exists(output_path):
-        # os.remove(output_path)
-        print(f"Temporary image file {output_path} removed.")
+    # # Clean up: Remove the saved image file if desired
+    # if os.path.exists(output_path):
+    #     # os.remove(output_path)
+    #     print(f"Temporary image file {output_path} removed.")
 
     close_images_box = (1892, 9)
     pyautogui.moveTo(close_images_box)
@@ -207,7 +214,7 @@ def process_request(user_name="Testa,Pa"):
     ### GET DOC DONE ###
 
     ### GET X-Rays ###
-
+    time.sleep(0.5)
     xray_box = (1594, 812)
     pyautogui.moveTo(xray_box)
     pyautogui.click(xray_box)
@@ -228,9 +235,9 @@ def process_request(user_name="Testa,Pa"):
         print("send_image_to_api")
 
     # Clean up: Remove the saved image file if desired
-    if os.path.exists(output_path):
-        # os.remove(output_path)
-        print(f"Temporary image file {output_path} removed.")
+    # if os.path.exists(output_path):
+    #     # os.remove(output_path)
+    #     print(f"Temporary image file {output_path} removed.")
 
     close_xray_box = (333, 53)
     pyautogui.moveTo(close_xray_box)
@@ -250,7 +257,7 @@ def process_request(user_name="Testa,Pa"):
     pyautogui.click(close_patient_box)
 
     # ### CLOSE Pateint DONE ###
-    return {"code": code, "image": "image.png", "xray": "xray.png"}
+    return {"code": code, "fee": fee, "image": "image.png", "xray": "xray.png"}
 
 
 # open_eaglesoft()

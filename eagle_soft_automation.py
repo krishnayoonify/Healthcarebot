@@ -4,7 +4,7 @@ import os
 from eagle_soft_prod_code import open_eaglesoft, process_request
 import json
 
-BASE_URL = "http://127.0.0.1:8000/api"  # Replace with your Django app domain
+BASE_URL = "https://saikrishna1996.pythonanywhere.com/api"  # Replace with your Django app domain
 POLL_INTERVAL = 1  # Poll every 60 seconds
 
 
@@ -23,11 +23,12 @@ def update_task_status(task_id, status, result=None):
         for i, image_path in enumerate([result["image"], result["xray"]]):
             if os.path.exists(image_path):
                 files[f"image{i+1}"] = open(image_path, "rb")
-    print(f"posting {data}")
+    print(f"posting data={data} files={files}")
 
     response = requests.post(
         f"{BASE_URL}/tasks/update/{task_id}/", data=data, files=files
     )
+    print(f"response.status_code {response.status_code}")
     if result:
         for file in files.values():
             file.close()
@@ -42,7 +43,7 @@ def execute_gui_task(task):
     try:
         name = task.get("parameters").get("name", None)
         if name:
-            result = process_request()
+            result = process_request(name)
         else:
             result = {"error": "No User Name given"}
 
@@ -52,17 +53,18 @@ def execute_gui_task(task):
 
 
 def main():
-    open_eaglesoft()
+    # open_eaglesoft()
     while True:
         tasks = get_pending_tasks()
         for task in tasks:
             task_id = task["id"]
             try:
                 print(f"Got task {task_id} ")
-                # update_task_status(task_id, "in_progress")  # TODO: uncomment this
+                update_task_status(task_id, "in_progress")  # TODO: uncomment this
                 status, result = execute_gui_task(task)
-                print(f"Finished task {task_id} result {result}")
+                print(f"Finished task {task_id} {status} result {result}")
                 update_task_status(task_id, status, result)
+                print(f"Done Updating task {task_id} {status}")
             except Exception as e:
                 print(e)
                 update_task_status(task_id, "pending")
