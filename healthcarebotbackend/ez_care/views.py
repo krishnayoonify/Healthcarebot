@@ -56,15 +56,15 @@ class UpdateTaskView(APIView):
             file_paths.append(default_storage.url(file_path))
 
         original_result = request.data.getlist("result")
-        status_code = original_result[0] if original_result else ""
-        new_result = {"status_code": status_code, "files": file_paths}
+        status_code = original_result[0] if original_result else "{}"
+        status_code = json.loads(status_code)
+        if file_paths:
+            status_code["files"] = file_paths
         data = request.data.dict()
         data.pop("image1", None)
         data.pop("image2", None)
         data.pop("result", None)
-
-        data["result"] = json.dumps(new_result)
-
+        data["result"] = status_code
         serializer = TaskSerializer(task, data=data, partial=True)
         if serializer.is_valid():
             serializer.save()

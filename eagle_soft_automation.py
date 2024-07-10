@@ -5,6 +5,7 @@ from eagle_soft_prod_code import open_eaglesoft, process_request
 import json
 
 BASE_URL = "https://saikrishna1996.pythonanywhere.com/api"  # Replace with your Django app domain
+# BASE_URL = "http://localhost:8000/api"  # Replace with your Django app domain
 POLL_INTERVAL = 1  # Poll every 60 seconds
 
 
@@ -53,7 +54,7 @@ def execute_gui_task(task):
 
 
 def main():
-    # open_eaglesoft()
+    open_eaglesoft()
     while True:
         tasks = get_pending_tasks()
         for task in tasks:
