@@ -12,9 +12,6 @@ import json
 class CreateTaskView(APIView):
     def post(self, request):
         serializer = TaskSerializer(data=request.data)
-        import pdb
-
-        pdb.set_trace()
         if serializer.is_valid():
             task = serializer.save()
             return Response({"task_id": task.id}, status=status.HTTP_201_CREATED)
