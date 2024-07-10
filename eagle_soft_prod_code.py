@@ -34,7 +34,7 @@ def open_eaglesoft():
     password_box = (853, 477)
     pyautogui.moveTo(password_box)
     pyautogui.click(password_box)
-    pyautogui.typewrite("Cumani12345!")
+    pyautogui.typewrite("Montrose2200!")
 
     logon_box = (899, 544)
     pyautogui.moveTo(logon_box)
@@ -47,28 +47,29 @@ def open_eaglesoft():
     time.sleep(5)
 
 
-def process_request(user_name="Testa,Pa"):
+def process_request(user_name="collins, naomi"):
     # return {"code": "E1232C", "fee": "24", "image": "image.png", "xray": "xray.png"}
     chart_box = (239, 67)
     pyautogui.moveTo(chart_box)
     pyautogui.click(chart_box)
-    time.sleep(3)
+    time.sleep(5)
 
     search_user_box = (676, 273)
     pyautogui.moveTo(search_user_box)
     pyautogui.click(search_user_box)
     pyautogui.typewrite(user_name)
-    time.sleep(2)
+    time.sleep(3)
 
     user_record_box = (630, 448)
     pyautogui.moveTo(user_record_box)
     pyautogui.click(user_record_box)
     pyautogui.doubleClick(user_record_box)
-    time.sleep(3)
+    time.sleep(5)
 
     alert_box = (960, 623)
     pyautogui.moveTo(alert_box)
     pyautogui.click(alert_box)
+    time.sleep(3)
 
     ## get code ##
 
@@ -143,7 +144,7 @@ def process_request(user_name="Testa,Pa"):
             table_box_cnt += 26
             pyautogui.moveTo(table_box)
             pyautogui.click(table_box)
-            time.sleep(0.5)
+            time.sleep(1)
             code, fee = get_popup_data(code, fee)
 
     for i in range(6):
@@ -151,7 +152,7 @@ def process_request(user_name="Testa,Pa"):
             fee_box = (878, 848)
             pyautogui.moveTo(fee_box)
             pyautogui.click(fee_box)
-            time.sleep(0.5)
+            time.sleep(1)
             code, fee = get_popup_data(code, fee)
     ## get code done ##
 
@@ -215,10 +216,12 @@ def process_request(user_name="Testa,Pa"):
 
     ### GET X-Rays ###
     time.sleep(0.5)
-    xray_box = (1594, 812)
+    xray_box = (1594, 815)
     pyautogui.moveTo(xray_box)
     pyautogui.click(xray_box)
-    time.sleep(5)
+    time.sleep(0.5)
+    pyautogui.click(xray_box)
+    time.sleep(2)
 
     xray_copy_box = (818, 57)
     pyautogui.moveTo(xray_copy_box)
